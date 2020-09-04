@@ -1,7 +1,10 @@
 import logging
-# from controllers.chat_controller import ChatController
 from flask import Flask
 from flask_sockets import Sockets
+
+# Imported Controllers
+from controllers.chat_controller import ChatController
+from controllers.user_controller import UserController
 
 app = Flask(__name__)
 sockets = Sockets(app)
@@ -15,6 +18,14 @@ def server_error(e):
     """.format(e), 500
 
 # Initializes the class routes
+""" USER MANAGER SECTION """
+user_controller = UserController()
+user_controller.create_user('renisalcedo@sample.com')
+user_controller.get_user('renisalcedo@sample.com')
+
+
+""" CHAT MANAGER SECTION """
+chat_controller = ChatController()
 @sockets.route('/chat')
 def chat_socket(ws):
     while not ws.closed:
