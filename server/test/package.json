@@ -1,0 +1,14 @@
+{
+  "name": "serve_static_test",
+  "version": "1.0.0",
+  "description": "Will serve the static html file",
+  "main": "index.js",
+  "author": "Reynaldo Salcedo",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "scripts" : {
+    "start": "node server.js"
+  }
+}
