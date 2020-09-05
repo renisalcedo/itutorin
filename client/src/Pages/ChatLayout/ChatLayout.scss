@@ -1,0 +1,12 @@
+.chat {
+  display: flex;
+  height: 100vh;
+  .chat-sidebar {
+    flex: 1.5;
+    background-color: lightcoral;
+  }
+  .chat-content {
+    flex: 6;
+    background-color: lightcyan;
+  }
+}
