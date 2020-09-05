@@ -1,7 +1,7 @@
 import grpc.experimental.gevent as grpc_gevent
 from flask import Flask
 from flask_restful import Resource,Api
-from flask_sockets import Sockets
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import logging
 
 # FIXES ISSUE FOR DATASTORE AND SOCKET TOGETHER
@@ -11,7 +11,7 @@ grpc_gevent.init_gevent()
 from controllers.chat_controller import ChatController
 
 app = Flask(__name__)
-sockets = Sockets(app)
+sockets = SocketIO(app, async_mode=None, cors_allowed_origins="*")
 api = Api(app)
 
 @app.errorhandler(500)
@@ -30,20 +30,17 @@ api.add_resource(ChatController, '/sessions')
 """ -------------------- """
 """ CHAT SOCKET SECTION  """
 """ -------------------- """
-@sockets.route('/chat')
-def chat_socket(ws):
-    while not ws.closed:
-        message = ws.receive()
-        if message is None:  # message is "None" if the client has closed.
-            continue
-        # Send the message to all clients connected to this webserver
-        # process. (To support multiple processes or instances, an
-        clients = ws.handler.server.clients.values()
-        for client in clients:
-            client.ws.send(message)
+@sockets.on('connect')
+def greeting():
+    print("WELCOME !!!!!!!!!!!")
+    emit("HI, thanks for connecting!")
 
+@sockets.on('message')
+def chat_socket(text):
+    print(text)
+    send(text)
 
 if __name__ == '__main__':
     # This is used when running locally. Gunicorn is used to run the
     # application on Google App Engine. See entrypoint in app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    sockets.run(app)
