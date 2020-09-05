@@ -1,5 +1,6 @@
 import grpc.experimental.gevent as grpc_gevent
 from flask import Flask
+from flask_restful import Resource,Api
 from flask_sockets import Sockets
 import logging
 
@@ -8,10 +9,10 @@ grpc_gevent.init_gevent()
 
 # Imported Controllers
 from controllers.chat_controller import ChatController
-from controllers.user_controller import UserController
 
 app = Flask(__name__)
 sockets = Sockets(app)
+api = Api(app)
 
 @app.errorhandler(500)
 def server_error(e):
@@ -21,15 +22,14 @@ def server_error(e):
     See logs for full stacktrace.
     """.format(e), 500
 
-# Initializes the class routes
-""" USER MANAGER SECTION """
-user_controller = UserController()
-user_controller.create_user('renisalcedo@sample.com')
-user_controller.get_user('renisalcedo@sample.com')
+""" ------------------------- """
+""" ROUTE CONTROLLERS SECTION """
+""" ------------------------- """
+api.add_resource(ChatController, '/sessions')
 
-
-""" CHAT MANAGER SECTION """
-chat_controller = ChatController()
+""" -------------------- """
+""" CHAT SOCKET SECTION  """
+""" -------------------- """
 @sockets.route('/chat')
 def chat_socket(ws):
     while not ws.closed:

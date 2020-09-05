@@ -8,3 +8,7 @@
 To run locally, you need to use gunicorn with the ``flask_socket`` worker:
 
     $ gunicorn -b 127.0.0.1:8080 -k flask_sockets.worker main:app
+
+## Deployment
+- gcloud app deploy
+- To increase the timeout do cloud config set app/cloud_build_timeout [NUMBER OF SECONDS]
