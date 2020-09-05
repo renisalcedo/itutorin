@@ -1,6 +1,10 @@
-import logging
+import grpc.experimental.gevent as grpc_gevent
 from flask import Flask
 from flask_sockets import Sockets
+import logging
+
+# FIXES ISSUE FOR DATASTORE AND SOCKET TOGETHER
+grpc_gevent.init_gevent()
 
 # Imported Controllers
 from controllers.chat_controller import ChatController
