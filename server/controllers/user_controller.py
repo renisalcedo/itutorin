@@ -20,6 +20,7 @@ class UserController:
         indexU=self.get_user(user)
         if indexU:
         	print('user with that name already exists')
+        	return ""
         else:
         
         
