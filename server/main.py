@@ -1,7 +1,7 @@
 import grpc.experimental.gevent as grpc_gevent
 from flask import Flask
 from flask_restful import Resource,Api
-from flask_sockets import Sockets
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import logging
 
 
@@ -12,17 +12,15 @@ grpc_gevent.init_gevent()
 from controllers.chat_controller import ChatController
 from controllers.user_controller import UserController
 
+# Initial App Setup
 app = Flask(__name__)
-sockets = Sockets(app)
+sockets = SocketIO(app, async_mode=None, cors_allowed_origins="*")
 api = Api(app)
 
 @app.errorhandler(500)
 def server_error(e):
     logging.exception('An error occurred during a request.')
-    return """
-    An internal error occurred: <pre>{}</pre>
-    See logs for full stacktrace.
-    """.format(e), 500
+    return """ An internal error occurred: """.format(e), 500
 
 """ ------------------------- """
 """ ROUTE CONTROLLERS SECTION """
@@ -49,20 +47,26 @@ userC.create_user('James Mathew','3526268')
 """ -------------------- """
 """ CHAT SOCKET SECTION  """
 """ -------------------- """
-@sockets.route('/chat')
-def chat_socket(ws):
-    while not ws.closed:
-        message = ws.receive()
-        if message is None:  # message is "None" if the client has closed.
-            continue
-        # Send the message to all clients connected to this webserver
-        # process. (To support multiple processes or instances, an
-        clients = ws.handler.server.clients.values()
-        for client in clients:
-            client.ws.send(message)
+user_controller = UserController()
 
+@sockets.on('join')
+def on_join(user):
+    room  = user_controller.get_user_session(user)
+    join_room(room)
+    emit('join', user + ' has joined the session.', room=room)
+
+@sockets.on('leave')
+def on_leave(user):
+    room  = user_controller.get_user_session(user)
+    emit('leave', user + ' has leaved the session.', room=room)
+    leave_room(room)
+
+@sockets.on('message')
+def on_message(data):
+    user = data['user']
+    room = data['room']
+    msg = data['msg']
+    emit('message', msg, room=room)
 
 if __name__ == '__main__':
-    # This is used when running locally. Gunicorn is used to run the
-    # application on Google App Engine. See entrypoint in app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    sockets.run(app)
