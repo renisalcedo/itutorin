@@ -41,7 +41,7 @@
       .single-discussion {
         margin-top: 1rem;
         margin-bottom: 1rem;
-        display: inline-block;
+        margin: 0 auto;
         counter-increment: item-counter;
         width: 70%;
         max-width: 840px;
@@ -160,6 +160,5 @@
 }
 
 .message-submit {
-  margin: 0.5rem;
-  margin-left: 48rem;
+  margin: 0.5rem auto;
 }
