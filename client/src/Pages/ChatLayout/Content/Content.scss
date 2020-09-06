@@ -39,10 +39,12 @@
     overflow-y: scroll;
     .discussions {
       .single-discussion {
-        margin: 2rem 0rem 2rem 8rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
         display: inline-block;
         counter-increment: item-counter;
         width: 70%;
+        max-width: 840px;
         margin-bottom: 15px;
         border: solid 1px #dfe9f1;
         box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
@@ -82,7 +84,7 @@
               margin: 0;
             }
             .discussion-date {
-              margin-left: -1.5rem;
+              margin-left: 5px;
               margin-top: 0px;
               font-family: Inter;
               font-style: normal;
@@ -151,7 +153,13 @@
   .discussion-editor {
     margin-top: 10px;
     flex: 3;
-    padding: 0rem 8rem;
-    padding-left: 15rem;
+    margin: 0 auto;
+    max-width: 840px;
+    width: 70%;
   }
+}
+
+.message-submit {
+  margin: 0.5rem;
+  margin-left: 48rem;
 }
