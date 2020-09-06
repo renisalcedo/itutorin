@@ -60,7 +60,7 @@ class Landing extends Component {
                   variant="dark"
                   style={{ borderRadius: "30px" }}
                 >
-                  Join as a mentor
+                  Create a Session
                 </Button>
               </Link>
               <Button
@@ -73,7 +73,7 @@ class Landing extends Component {
                   })
                 }
               >
-                Join as a Student
+                Join a Session
               </Button>
             </div>
           </Card>
