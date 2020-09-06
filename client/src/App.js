@@ -1,7 +1,10 @@
 import React from "react";
 import Router from "./router";
+import { UserProvider } from "./context/userContext";
 
 function App() {
+  const user = { userName: "", userType: "" };
+
   return (
     <div className="App">
       <link
@@ -10,7 +13,9 @@ function App() {
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossOrigin="anonymous"
       />
-      <Router />
+      <UserProvider value={user}>
+        <Router />
+      </UserProvider>
     </div>
   );
 }

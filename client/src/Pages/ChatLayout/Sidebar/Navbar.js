@@ -1,38 +1,42 @@
 import React, { useState } from "react";
-import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
-import { IconContext } from "react-icons";
 import Button from "react-bootstrap/Button";
-import Flash from "./Flash";
+import QuizModal from "./Popups/QuizModal";
 
 function Navbar() {
+  const [show, setShow] = useState(false);
+
+  const showQuiz = () => {
+    setShow(true);
+  };
+
+  const hideQuiz = () => {
+    setShow(false);
+  };
+
   return (
     <>
-      <IconContext.Provider value={{ color: "#fff" }}></IconContext.Provider>
-
-
       <nav className="nav-menu-active">
         <ul className="nav-menu-items">
-          {SidebarData.map((item, index) => {
-            return (
-              <Button variant="outline-info" style={{margin:"10px",padding:"2px",width:"95%",border:"none"}}>
-                <li key={index} className={item.cname}>
-                  {item.icon} {item.title}
-                </li>
-              </Button>
-            );
-          })}
-          <Button className="quiz" variant="info">
-            Quiz
+          <Button
+            variant="outline-info"
+            style={{ margin: "10px", padding: "5px", width: "18rem" }}
+            onClick={showQuiz}
+          >
+            Create Quiz
           </Button>
-          <Flash />
+          <Button
+            variant="outline-info"
+            style={{ margin: "10px", padding: "5px", width: "18rem" }}
+          >
+            Create Flashcard
+          </Button>
+          );
         </ul>
       </nav>
+      <QuizModal show={show} onHide={hideQuiz} />
     </>
   );
 }
 
 export default Navbar;
-
-
-
