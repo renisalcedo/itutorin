@@ -6,6 +6,8 @@ import { Card, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Landing.scss";
 import UserContext from "../../context/userContext";
+import { socket } from "../../utils/constants"
+import axios from 'axios'
 
 class Landing extends Component {
   constructor(props) {
@@ -13,6 +15,21 @@ class Landing extends Component {
     this.state = { formState: 1, userName: "", roomId: null };
   }
   static contextType = UserContext;
+
+  componentDidMount() {
+    socket.on('create_session', (server_msg) => {
+      const roomId = server_msg.session_id
+      this.setState({roomId: roomId})
+      window.localStorage.setItem("session_values",
+       JSON.stringify({user: this.state.userName, roomId: roomId}))
+    })
+
+    socket.on("join", (server_msg) => {
+      window.localStorage.setItem("session_values", JSON.stringify(
+        {user: server_msg.user, roomId: server_msg.session_id})
+      )
+    })
+  }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -62,7 +79,7 @@ class Landing extends Component {
                 onChange={this.onChange}
               />
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="Room Id"
                 required
                 name="roomId"
@@ -75,8 +92,10 @@ class Landing extends Component {
                   style={{ borderRadius: "30px" }}
                   onClick={() => {
                     const updatedUser = { name: userName, roomId: roomId };
+                    const username = updatedUser.name
 
                     setUser(updatedUser);
+                    socket.emit("join", {session_id: roomId, user: username})
                   }}
                 >
                   Join
@@ -86,18 +105,51 @@ class Landing extends Component {
           </Card>
         )}
 
-        {formState === 2 && (
+        {formState === 4 && (
           <Card className="main-card">
             <div>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                required
+                name="userName"
+                onChange={this.onChange}
+              />
               <Link to="/chat">
                 <Button
                   className="option-button"
                   variant="dark"
                   style={{ borderRadius: "30px" }}
+                  onClick={() => {
+                    const updatedUser = { name: userName };
+                    setUser(updatedUser);
+
+                    const username = updatedUser.name
+                    axios.post("https://precise-braid-288518.ue.r.appspot.com/sessions", {user: username})
+                    .then(d => {
+                      socket.emit('create_session', username)
+                    })
+                    .catch(e => console.log(e))
+                  }}
                 >
-                  Create a Session
+                  Create
                 </Button>
               </Link>
+            </div>
+          </Card>
+        )}
+
+        {formState === 2 && (
+          <Card className="main-card">
+            <div>
+              <Button
+                className="option-button"
+                variant="dark"
+                style={{ borderRadius: "30px" }}
+                onClick={() => this.setState({formState: 4})}
+                >
+                Create a Session
+              </Button>
               <Button
                 className="option-button"
                 variant="dark"
