@@ -11,7 +11,7 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: dummyData,
+      data: [],
       user: "",
       currentText: "",
       roomId: "",
@@ -22,6 +22,23 @@ class Content extends Component {
     setTimeout(() => {
       this.scrollToBottom();
     }, 2000);
+
+    const sessionValues = JSON.parse(window.localStorage.getItem('session_values'))
+    this.setState({user: sessionValues.user, roomId: sessionValues.roomId})
+
+    socket.emit('join', {session_id: sessionValues.roomId, user: sessionValues.user})
+    socket.on('join', (server_msg) => {
+      const { data } = this.state;
+      data.push({
+        name: "SERVER",
+        dateTime: new Date().toDateString(),
+        content: `User ${server_msg.user} Has Joined the session ...`,
+      });
+
+      this.setState({
+        data: data,
+      });
+    })
 
     socket.on("message", (channel_msg) => {
       const { data } = this.state;
@@ -75,7 +92,7 @@ class Content extends Component {
         <div className="discussion">
           <div className="discussion-title">
             <div className="ticket-title">
-              <span className="title-text">Chat Section</span>
+              <span className="title-text">Chat Section : {this.state.roomId}</span>
             </div>
           </div>
           <div className="discussion-comments">

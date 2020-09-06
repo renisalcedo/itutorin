@@ -25,7 +25,9 @@ class Landing extends Component {
     })
 
     socket.on("join", (server_msg) => {
-      window.localStorage.setItem("session_values", JSON.stringify(server_msg))
+      window.localStorage.setItem("session_values", JSON.stringify(
+        {user: server_msg.user, roomId: server_msg.session_id})
+      )
     })
   }
 
