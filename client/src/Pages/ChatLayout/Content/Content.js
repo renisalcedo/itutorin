@@ -5,14 +5,14 @@ import userIcon2 from "../../../assets/userIcon2.jpg";
 import "./Content.scss";
 import dummyData from "../dummyData";
 import Button from "react-bootstrap/Button";
-import socket from "../../../utils/socket";
+import { socket } from "../../../utils/constants";
 
 class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: dummyData,
-      user: "Asel Peiris",
+      data: [],
+      user: "",
       currentText: "",
       roomId: "",
     };
@@ -23,8 +23,17 @@ class Content extends Component {
       this.scrollToBottom();
     }, 2000);
 
-    socket.on("message", (msg) => {
-      console.log(msg);
+    socket.on("message", (channel_msg) => {
+      const { data } = this.state
+      data.push({
+        name: channel_msg.user,
+        dateTime: new Date().toDateString(),
+        content: channel_msg.msg
+      })
+
+      this.setState({
+        data: data,
+      });
     });
   }
 
@@ -48,25 +57,14 @@ class Content extends Component {
     });
   };
 
-  handleSubmit = () => {
-    let { data, currentText, user, roomId } = this.state;
-    let dataElement = {
-      name: user,
-      dateTime: new Date().toDateString(),
-      content: currentText,
-    };
-
-    data.push(dataElement);
-
-    this.setState({
-      currentText: "",
-      data: data,
-    });
+  handleSubmit = (e) => {
+    e.preventDefault()
+    let { currentText, user, roomId } = this.state;
 
     socket.emit("message", {
       user: user,
       room: roomId,
-      msg: dataElement.content,
+      msg: currentText,
     });
   };
 

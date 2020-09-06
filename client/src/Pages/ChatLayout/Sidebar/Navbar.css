@@ -1,9 +1,10 @@
 .navbar{
-    background-color: #333333;
+    background-color: #060b20;
     height: 80px;
     display: flex;
     justify-content: start;
     align-items: center;
+    padding: 10px;
 }
 .menu-bars{
     margin-left: 2rem;
@@ -19,13 +20,13 @@
     justify-content: center;
     position: fixed;
     top: 0;
-    left: -100%;
+    margin-left: -100%;
     transition: 850ms;
 }
 .nav-menu.active{
     left: 0;
     transition: 350ms;
-
+    background-color: #333333;
 }
 .nav-text{
     display: flex;
@@ -34,8 +35,7 @@
     padding: 8px 0px 8px 16px;
     list-style: none;
     height: 60px;
-    background-color: #333333;
-    width: 150px;
+    width: 60px;
     margin-right: 100px;
 }
 .nav-text a{
@@ -50,7 +50,7 @@
     border-radius: 4px;
 }
 .nav-text a:hover{
-    background-color: #1a83ff;
+    background-color: lightcoral;
 }
 
 .nav-menu-items{
@@ -67,4 +67,15 @@
 }
 span{
     margin-left: 16px;
+}
+.btn{
+    padding: 10px;
+}
+.quiz{
+    width:220px;
+    margin-top:250px;
+}
+.flashcards{
+    width:220px;
+    margin-top:30px;
 }
