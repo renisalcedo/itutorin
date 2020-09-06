@@ -10,11 +10,12 @@ function Navbar() {
     <>
       <IconContext.Provider value={{ color: "#fff" }}></IconContext.Provider>
 
+
       <nav className="nav-menu-active">
         <ul className="nav-menu-items">
           {SidebarData.map((item, index) => {
             return (
-              <Button variant="outline-info">
+              <Button variant="outline-info" style={{margin:"10px",padding:"2px",width:"95%",border:"none"}}>
                 <li key={index} className={item.cname}>
                   {item.icon} {item.title}
                 </li>
@@ -32,3 +33,6 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
+
