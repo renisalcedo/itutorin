@@ -3,11 +3,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Image } from "react-bootstrap";
 import userIcon2 from "../../../assets/userIcon2.jpg";
 import "./Content.scss";
+import dummyData from "../dummyData";
+import Button from "react-bootstrap/Button";
 
 class Content extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { data: dummyData, user: "Asel Peiris", currentText: "" };
   }
 
   componentDidMount() {
@@ -19,7 +21,7 @@ class Content extends Component {
   componentDidUpdate() {
     setTimeout(() => {
       this.scrollToBottom();
-    }, 2000);
+    }, 500);
   }
 
   componentWillUnmount() {
@@ -30,7 +32,30 @@ class Content extends Component {
     this.el.scrollIntoView({ behavior: "smooth" });
   }
 
+  handleTinyEditorChange = (e) => {
+    this.setState({
+      currentText: e.target.getContent({ format: "text" }),
+    });
+  };
+
+  handleSubmit = () => {
+    let { data, currentText, user } = this.state;
+    let dataElement = {
+      name: user,
+      dateTime: new Date().toDateString(),
+      content: currentText,
+    };
+
+    data.push(dataElement);
+
+    this.setState({
+      currentText: "",
+      data: data,
+    });
+  };
+
   render() {
+    const { data } = this.state;
     return (
       <>
         <div className="discussion">
@@ -41,98 +66,28 @@ class Content extends Component {
           </div>
           <div className="discussion-comments">
             <div className="discussions">
-              <div className="single-discussion">
-                <div className="user-info">
-                  <div className="image">
-                    <Image src={userIcon2} alt="icon" rounded />
+              {data.map((dataElement, index) => {
+                return (
+                  <div className="single-discussion">
+                    <div className="user-info">
+                      <div className="image">
+                        <Image src={userIcon2} alt="icon" rounded />
+                      </div>
+                      <div className="img-desc">
+                        <h2>{dataElement.name}</h2>
+                        <p className="discussion-date">
+                          {dataElement.dateTime}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="comment-content">
+                      <div className="comment-details">
+                        {dataElement.content}
+                      </div>
+                    </div>
                   </div>
-                  <div className="img-desc">
-                    <h2>Asel Peiris</h2>
-                    <p className="discussion-date">2020-09-05</p>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  <div className="comment-details">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-              </div>
-              <div className="single-discussion">
-                <div className="user-info">
-                  <div className="image">
-                    <Image src={userIcon2} alt="icon" rounded />
-                  </div>
-                  <div className="img-desc">
-                    <h2>Asel Peiris</h2>
-                    <p className="discussion-date">2020-09-05</p>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  <div className="comment-details">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-              </div>
-              <div className="single-discussion">
-                <div className="user-info">
-                  <div className="image">
-                    <Image src={userIcon2} alt="icon" rounded />
-                  </div>
-                  <div className="img-desc">
-                    <h2>Asel Peiris</h2>
-                    <p className="discussion-date">2020-09-05</p>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  <div className="comment-details">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-              </div>
-              <div className="single-discussion">
-                <div className="user-info">
-                  <div className="image">
-                    <Image src={userIcon2} alt="icon" rounded />
-                  </div>
-                  <div className="img-desc">
-                    <h2>Asel Peiris</h2>
-                    <p className="discussion-date">2020-09-05</p>
-                  </div>
-                </div>
-                <div className="comment-content">
-                  <div className="comment-details">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
             <div
               ref={(el) => {
@@ -143,8 +98,7 @@ class Content extends Component {
           <div className="discussion-editor">
             <Editor
               apiKey="lvp9xf6bvvm3nkaupm67ffzf50ve8femuaztgg7rkgkmsws3"
-              value={this.state.markdownString}
-              initialValue="<p>This is the initial content of the editor</p>"
+              value={this.state.currentText}
               init={{
                 height: "100%",
                 width: "100%",
@@ -200,8 +154,13 @@ class Content extends Component {
              alignleft aligncenter alignright alignjustify | \
              bullist numlist outdent indent | removeformat | help",
               }}
-              //   onEditorChange={}
+              onChange={this.handleTinyEditorChange}
             />
+          </div>
+          <div className="message-submit">
+            <Button variant="primary" onClick={this.handleSubmit}>
+              Submit
+            </Button>
           </div>
         </div>
       </>
