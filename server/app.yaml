@@ -1,0 +1,15 @@
+runtime: python
+env: flex
+
+# Use a special gunicorn worker class to support websockets.
+entrypoint: gunicorn -b :$PORT --worker-class eventlet -w 1 main:app
+
+runtime_config:
+  python_version: 3
+
+# extra-instance messaging system or data store would be needed.
+manual_scaling:
+  instances: 1
+
+env_variables:
+  GOOGLE_CLOUD_DISABLE_GRPC: True
