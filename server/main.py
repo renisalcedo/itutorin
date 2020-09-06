@@ -1,12 +1,13 @@
+import os
 import grpc.experimental.gevent as grpc_gevent
 from flask import Flask
 from flask_restful import Resource,Api
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 import logging
 
-
-# FIXES ISSUE FOR DATASTORE AND SOCKET TOGETHER
+# FIXES ISSUE FOR SERVER FREEZING OR HANGING
 grpc_gevent.init_gevent()
+os.environ['GOOGLE_CLOUD_DISABLE_GRPC']= 'True'
 
 # Imported Controllers
 from controllers.chat_controller import ChatController
@@ -26,24 +27,7 @@ def server_error(e):
 """ ROUTE CONTROLLERS SECTION """
 """ ------------------------- """
 api.add_resource(ChatController, '/sessions')
-userC=UserController()
-userC.create_user('James Mathew','3526268')
 
-print('user login ')
-print(userC.login('James Mathew'))
-userC.get_user('James Mathew')
-
-print('user session before ')
-print(userC.get_user_session('James Mathew'))
-userC.set_user_session('James Mathew','0009')
-
-print('user session after set new usersession ')
-print(userC.get_user_session('James Mathew'))
-
-print()
-userC=UserController()
-print("trying to add user same name")
-userC.create_user('James Mathew','3526268')
 """ -------------------- """
 """ CHAT SOCKET SECTION  """
 """ -------------------- """

@@ -5,63 +5,61 @@ class UserController:
         self._datastore_client = datastore.Client.from_service_account_json('./itutorin-76fdbe0c56af.json')
 
     def login(self, user):
+        """ Logs the user in by ensuring the user is added to our datastore
+        :type user: str
+        :rtype user: str
+        """
+        # Gets the user filtering by the name
         users = self._datastore_client.query(kind='Users')
-        user_query = users.add_filter('name', '=', user).fetch()
+        user_query = users.add_filter('user', '=', user).fetch()
+        user_value = list(user_query)
 
-        if self._user_exist(user_query):
-            return user_query
+        if self._user_exist(user_value):
+            return user_value
 
-    def create_user(self, user,session_id):
-        # TODO
-        #Need Unique usernames
-        #MOST OF THE WORK HERE COMPLETE. Make sure user and user data in parameters get store
-        users = self._datastore_client.query(kind='Users')
-        user_query = users.add_filter('name', '=', user).fetch()
-        indexU=self.get_user(user)
-        if indexU:
-        	print('user with that name already exists')
+        return ""
+
+    def create_user(self, user, session_id):
+        """ Creates user with the given user and session id in parameters
+        :type user: str
+        """
+        curr_user = self.get_user(user)
+
+        if curr_user:
         	return ""
         else:
-        
-        
         	key = self._datastore_client.key('Users')
         	users = datastore.Entity(key=key)
-        	#users.update({ 'user': user })
         	users.update({ 'user': user , 'session_id': session_id})
-
         	self._datastore_client.put(users)
-        	
 
     def get_user(self,user):
-        # TODO
-        #WE WANT TO GET DATA FOR A SPECIFIC USER IN OUR DATASTORE
-        return list(self._datastore_client.query(kind='Users').add_filter('user', '=', user).fetch())
-        
-        
-        
-        
-        pass
+        """ Gives back the user data 
+        :type user: str
+        :rtype user: list[str]
+        """
+        curr_user = self._datastore_client.query(kind='Users')
+        found_user = curr_user.add_filter('user', '=', user).fetch()
 
+        return list(found_user)
+        
     def get_user_session(self,user):
-        # TODO
-        #FOR A SPEFIC USER ON PARAMETER GET THE SESSION AND RETURN IT 
-        indexU=self.get_user(user)
-        if indexU:
-        	return indexU[0]['session_id']
+        """ Gives back the user session from datastore
+        :type user: str
+        :rtype user_session: str
+        """
+        curr_user = self.get_user(user)
+        return curr_user[0]['session_id']
         
-        pass
-
     def set_user_session(self,user,session_id):
-        # TODO
-        #UPDATE THE EXISTING USER DATA TO HAVE THE PARAMETER ASSIGNED SESSION_ID 
-        indexU=self.get_user(user)
-        if indexU:
-        	indexU[0]['session_id']=session_id
-        	self._datastore_client.put(indexU[0])
+        """ Sets the user session for the user 
+        :type user: str
+        :type session_id: str
+        """
+        curr_user =self.get_user(user)
+        if curr_user:
+        	curr_user[0]['session_id']= session_id
+        	self._datastore_client.put(curr_user[0])
         	
-        
-        pass
-        
-
     def _user_exist(self,query):
-        return len(list(query)) > 0
+        return len(query) > 0

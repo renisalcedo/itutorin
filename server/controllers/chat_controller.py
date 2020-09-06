@@ -25,23 +25,17 @@ class ChatController(Resource):
         :type user: str
         :rtype session_id: str
         """
-        user_logged = UserController.login(user)
         user_controller = UserController()
+        user_logged = user_controller.login(user)
 
         if user_logged:
             user_session = user_controller.get_user_session(user)
-            if user_session:
-                return user_session
-
-            self.set_session_id(user)
-
-            return self._session_id
+            return user_session
         else:
             new_session = self._create_random_session(user)
-            user_controller.create_user(user,new_session)
+            user_controller.create_user(user, new_session)
 
             return new_session
-
 
     def set_session_id(self,user):
         """ Creates a Session for a new user to invite others 
@@ -63,4 +57,4 @@ class ChatController(Resource):
             session_id += random.choice(key_options)
             i += 1
 
-        self._session_id = session_id
+        return session_id
