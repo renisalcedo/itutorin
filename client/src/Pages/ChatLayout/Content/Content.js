@@ -5,13 +5,13 @@ import userIcon2 from "../../../assets/userIcon2.jpg";
 import "./Content.scss";
 import dummyData from "../dummyData";
 import Button from "react-bootstrap/Button";
-import socket from "../../../utils/socket";
+import { socket } from "../../../utils/constants";
 
 class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: dummyData,
+      data: [],
       user: "Asel Peiris",
       currentText: "",
       roomId: "",
@@ -22,6 +22,8 @@ class Content extends Component {
     setTimeout(() => {
       this.scrollToBottom();
     }, 2000);
+
+    socket.emit("join", "Reni56BnSsBVKlXpPuox")
 
     socket.on("message", (msg) => {
       console.log(msg);
@@ -48,7 +50,8 @@ class Content extends Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault()
     let { data, currentText, user, roomId } = this.state;
     let dataElement = {
       name: user,
@@ -64,8 +67,8 @@ class Content extends Component {
     });
 
     socket.emit("message", {
-      user: user,
-      room: roomId,
+      user: 'Reni',
+      room: "Reni56BnSsBVKlXpPuox",
       msg: dataElement.content,
     });
   };
