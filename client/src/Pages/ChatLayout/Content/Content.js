@@ -5,17 +5,27 @@ import userIcon2 from "../../../assets/userIcon2.jpg";
 import "./Content.scss";
 import dummyData from "../dummyData";
 import Button from "react-bootstrap/Button";
+import socket from "../../../utils/socket";
 
 class Content extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: dummyData, user: "Asel Peiris", currentText: "" };
+    this.state = {
+      data: dummyData,
+      user: "Asel Peiris",
+      currentText: "",
+      roomId: "",
+    };
   }
 
   componentDidMount() {
     setTimeout(() => {
       this.scrollToBottom();
     }, 2000);
+
+    socket.on("message", (msg) => {
+      console.log(msg);
+    });
   }
 
   componentDidUpdate() {
@@ -39,7 +49,7 @@ class Content extends Component {
   };
 
   handleSubmit = () => {
-    let { data, currentText, user } = this.state;
+    let { data, currentText, user, roomId } = this.state;
     let dataElement = {
       name: user,
       dateTime: new Date().toDateString(),
@@ -51,6 +61,12 @@ class Content extends Component {
     this.setState({
       currentText: "",
       data: data,
+    });
+
+    socket.emit("message", {
+      user: user,
+      room: roomId,
+      msg: dataElement.content,
     });
   };
 
