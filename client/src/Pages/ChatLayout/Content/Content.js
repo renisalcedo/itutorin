@@ -11,7 +11,7 @@ class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: dummyData,
       user: "",
       currentText: "",
       roomId: "",
@@ -24,12 +24,12 @@ class Content extends Component {
     }, 2000);
 
     socket.on("message", (channel_msg) => {
-      const { data } = this.state
+      const { data } = this.state;
       data.push({
         name: channel_msg.user,
         dateTime: new Date().toDateString(),
-        content: channel_msg.msg
-      })
+        content: channel_msg.msg,
+      });
 
       this.setState({
         data: data,
@@ -58,7 +58,7 @@ class Content extends Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let { currentText, user, roomId } = this.state;
 
     socket.emit("message", {

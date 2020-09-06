@@ -1,5 +1,4 @@
-import React from 'react';
-import { Switch } from 'react-router-dom';
+import React from "react";
 import Router from "./router";
 
 function App() {
