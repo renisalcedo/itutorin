@@ -7,13 +7,13 @@ function QuizModal(props) {
 
   const handleSubmission = () => {};
 
-  // const onQChange = (e) => {
-  //   setQuestion(e.target.value);
-  // };
+  const onQChange = (e) => {
+    // setQuestion(e.target.value);
+  };
 
-  // const onAChange = (e) => {
-  //   setAnswer(e.target.value);
-  // };
+  const onAChange = (e) => {
+    // setAnswer(e.target.value);
+  };
 
   return (
     <>
