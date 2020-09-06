@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { SidebarData } from './SidebarData';
 import "./Navbar.css";
 import { IconContext } from 'react-icons';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Flash from "./Flash";
 
 
 
@@ -22,14 +25,14 @@ function Navbar() {
                     
                     {SidebarData.map((item,index)=>{
                         return(
-                            <li key={index} className={item.cname}>
-                                <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
-                                </Link>
-                            </li>
+
+                            <Button variant="outline-info"><li key={index} className={item.cname}>
+                                    {item.icon} {item.title}
+                            </li></Button>
                         )
                     })}
+                    <Button className="quiz" variant="info">Quiz</Button>
+                    <Flash />
                 </ul>
             </nav>
             
