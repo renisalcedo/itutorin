@@ -1,0 +1,164 @@
+.discussion {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .discussion-title {
+    display: flex;
+    flex: 1;
+    border-bottom: solid 1px #dfe9f1;
+    .back-icon {
+      .fa-icon {
+        font-size: 24px;
+        color: #1a73e8;
+      }
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      .back-text {
+        font-family: "Inter";
+        font-size: 18px;
+        padding: 1rem;
+        padding-bottom: 1.6rem;
+        text-decoration: none;
+      }
+    }
+    .ticket-title {
+      flex: 5;
+      text-align: center;
+      padding: 1rem;
+      .title-text {
+        font-family: "Inter";
+        font-size: 26px;
+        font-weight: 600;
+        padding-right: 2rem;
+      }
+    }
+  }
+  .discussion-comments {
+    flex: 6;
+    overflow-y: scroll;
+    .discussions {
+      .single-discussion {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin: 0 auto;
+        counter-increment: item-counter;
+        width: 70%;
+        max-width: 840px;
+        margin-bottom: 15px;
+        border: solid 1px #dfe9f1;
+        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        .user-info {
+          display: flex;
+          padding: 8px;
+          padding-bottom: 0px;
+
+          .image {
+            width: 38px;
+            height: 38px;
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 2px;
+            }
+          }
+          .img-desc {
+            margin-left: 10px;
+            h2 {
+              font-family: Inter;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 22px;
+              margin: 3px;
+              /* identical to box height */
+            }
+            small {
+              font-family: Inter;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 12px;
+              line-height: 15px;
+              color: #90949c;
+              margin: 0;
+            }
+            .discussion-date {
+              margin-left: 5px;
+              margin-top: 0px;
+              font-family: Inter;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 12px;
+              line-height: 15px;
+
+              color: #90949c;
+            }
+          }
+          .status-btn {
+            background-color: white;
+            padding: 4px 36px;
+            border: solid 1px #eb5757;
+            border-radius: 100px;
+            color: #eb5757;
+            margin: 0 5px;
+            height: 30px;
+            cursor: default;
+          }
+        }
+        .comment-content {
+          display: flex;
+          .comment-details {
+            text-align: left;
+            flex: 3;
+            font-family: Inter;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 17px;
+            padding: 10px;
+            padding-top: 0px;
+
+            color: #1d2129;
+          }
+          .discussion-options {
+            flex: 1.5;
+            text-align: center;
+            padding: 20px;
+            .option-btn {
+              background-color: white;
+              color: #007bff;
+              padding: 4px 40px;
+              margin: 0 10px;
+              height: 30px;
+              cursor: pointer;
+              &.active {
+                background: #007bff;
+                color: white;
+              }
+              .option-text {
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 22px;
+                /* identical to box height */
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .discussion-editor {
+    margin-top: 10px;
+    flex: 3;
+    margin: 0 auto;
+    max-width: 840px;
+    width: 70%;
+  }
+}
+
+.message-submit {
+  margin: 0.5rem auto;
+}

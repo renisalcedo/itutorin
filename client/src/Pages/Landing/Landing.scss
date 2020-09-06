@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Aladin&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+.main-card {
+  width: 20%;
+  height: fit-content;
+  margin: 0 auto;
+  opacity: 0.9;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  padding: 50px 10px;
+}
+
+button.start-button {
+  width: 15%;
+}
+
+.title-container {
+  text-align: center;
+  margin-top: 17%;
+  .site-title {
+    font-family: "Aladin", cursive;
+    font-size: 64px;
+    color: #ffffff;
+  }
+}
+
+.option-button {
+  width: 200px;
+  margin-top: 10px;
+}
