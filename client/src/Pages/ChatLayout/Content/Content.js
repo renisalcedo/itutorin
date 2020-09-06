@@ -12,7 +12,7 @@ class Content extends Component {
     super(props);
     this.state = {
       data: [],
-      user: "Asel Peiris",
+      user: "",
       currentText: "",
       roomId: "",
     };
@@ -23,10 +23,17 @@ class Content extends Component {
       this.scrollToBottom();
     }, 2000);
 
-    socket.emit("join", "Reni56BnSsBVKlXpPuox")
+    socket.on("message", (channel_msg) => {
+      const { data } = this.state
+      data.push({
+        name: channel_msg.user,
+        dateTime: new Date().toDateString(),
+        content: channel_msg.msg
+      })
 
-    socket.on("message", (msg) => {
-      console.log(msg);
+      this.setState({
+        data: data,
+      });
     });
   }
 
@@ -52,24 +59,12 @@ class Content extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    let { data, currentText, user, roomId } = this.state;
-    let dataElement = {
-      name: user,
-      dateTime: new Date().toDateString(),
-      content: currentText,
-    };
-
-    data.push(dataElement);
-
-    this.setState({
-      currentText: "",
-      data: data,
-    });
+    let { currentText, user, roomId } = this.state;
 
     socket.emit("message", {
-      user: 'Reni',
-      room: "Reni56BnSsBVKlXpPuox",
-      msg: dataElement.content,
+      user: user,
+      room: roomId,
+      msg: currentText,
     });
   };
 
