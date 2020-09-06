@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BackgroundSlider from "react-background-slider";
-import background1 from "../../assets/Background1.png";
-import background2 from "../../assets/Background2.png";
+import background1 from "../../assets/Background1.jpg";
+import background2 from "../../assets/Background2.jpg";
 import { Card, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Landing.scss";
