@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal,Row,Col,Form} from "react-bootstrap";
 
-function Quiz() {
+function Flash() {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
@@ -33,4 +33,4 @@ function Quiz() {
     );
   }
 
-export default Quiz;
+export default Flash;
