@@ -180,11 +180,7 @@ class Content extends Component {
                     value: { "list-style-type": "lower-roman" },
                   },
                 ],
-                toolbar:
-                  "undo redo | formatselect | bold italic backcolor | \
-             alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help",
-              }}
+                toolbar: "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help", }}
               onChange={this.handleTinyEditorChange}
             />
           </div>

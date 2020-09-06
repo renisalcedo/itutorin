@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Form, Button, Col } from "react-bootstrap";
 
 function QuizModal(props) {
