@@ -37,7 +37,7 @@ class Landing extends Component {
 
   render() {
     const { formState, userName, roomId } = this.state;
-    const { user, setUser } = this.context;
+    // const { user, setUser } = this.context;
 
     return (
       <>
@@ -94,7 +94,7 @@ class Landing extends Component {
                     const updatedUser = { name: userName, roomId: roomId };
                     const username = updatedUser.name
 
-                    setUser(updatedUser);
+                    // setUser(updatedUser);
                     socket.emit("join", {session_id: roomId, user: username})
                   }}
                 >
@@ -122,7 +122,7 @@ class Landing extends Component {
                   style={{ borderRadius: "30px" }}
                   onClick={() => {
                     const updatedUser = { name: userName };
-                    setUser(updatedUser);
+                    // setUser(updatedUser);
 
                     const username = updatedUser.name
                     axios.post("https://precise-braid-288518.ue.r.appspot.com/sessions", {user: username})

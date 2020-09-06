@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { Modal, Form, Button, Col } from "react-bootstrap";
 
 function QuizModal(props) {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
+  // const [question, setQuestion] = useState("");
+  // const [answer, setAnswer] = useState("");
 
   const handleSubmission = () => {};
 
-  const onQChange = (e) => {
-    setQuestion(e.target.value);
-  };
+  // const onQChange = (e) => {
+  //   setQuestion(e.target.value);
+  // };
 
-  const onAChange = (e) => {
-    setAnswer(e.target.value);
-  };
+  // const onAChange = (e) => {
+  //   setAnswer(e.target.value);
+  // };
 
   return (
     <>

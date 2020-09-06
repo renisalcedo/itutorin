@@ -3,7 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Image } from "react-bootstrap";
 import userIcon2 from "../../../assets/userIcon2.jpg";
 import "./Content.scss";
-import dummyData from "../dummyData";
+// import dummyData from "../dummyData";
 import Button from "react-bootstrap/Button";
 import { socket } from "../../../utils/constants";
 
