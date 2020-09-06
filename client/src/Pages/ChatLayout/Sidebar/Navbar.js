@@ -26,7 +26,7 @@ function Navbar() {
                     {SidebarData.map((item,index)=>{
                         return(
 
-                            <Button variant="outline-info"><li key={index} className={item.cname}>
+                            <Button variant="outline-info" style={{margin:"10px",padding:"2px",width:"95%",border:"none"}}><li key={index} className={item.cname}>
                                     {item.icon} {item.title}
                             </li></Button>
                         )
