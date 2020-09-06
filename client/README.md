@@ -8,6 +8,6 @@ Install the project using,
 
 #### `npm install`
 
-Run the project using,
+Run the project using
 
 #### `npm start`
