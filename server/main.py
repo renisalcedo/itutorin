@@ -34,16 +34,20 @@ api.add_resource(ChatController, '/sessions')
 user_controller = UserController()
 
 @sockets.on('join')
+def on_join(session_id):
+    join_room(session_id)
+    emit('join', 200, room=session_id)
+
+@sockets.on('create_session')
 def on_join(user):
     room  = user_controller.get_user_session(user)
     join_room(room)
-    emit('join', user + ' has joined the session.', room=room)
+    emit('create_session', room, room=room)
 
 @sockets.on('leave')
-def on_leave(user):
-    room  = user_controller.get_user_session(user)
-    emit('leave', user + ' has leaved the session.', room=room)
-    leave_room(room)
+def on_leave(session_id):
+    emit('leave', 200, room=session_id)
+    leave_room(session_id)
 
 @sockets.on('message')
 def on_message(data):
