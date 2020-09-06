@@ -20,19 +20,21 @@ class Landing extends Component {
           duration={5}
           transition={2}
         />
-        <div className="title-container">
-          <span className="site-title">iTutoring.online</span>
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <div className="title-container">
+            <span className="site-title">iTutoring.online</span>
+          </div>
+          {formState === 1 && (
+            <Button
+              variant="dark"
+              style={{ borderRadius: "30PX", padding: "15px" }}
+              onClick={() => this.setState({ formState: 2 })}
+              className="start-button"
+            >
+              Start a Mentoring session
+            </Button>
+          )}
         </div>
-        {formState === 1 && (
-          <Button
-            variant="dark"
-            style={{ borderRadius: "30PX", padding: "15px" }}
-            onClick={() => this.setState({ formState: 2 })}
-            className="start-button"
-          >
-            Start a Mentoring session
-          </Button>
-        )}
 
         {formState === 3 && (
           <Card className="main-card">
